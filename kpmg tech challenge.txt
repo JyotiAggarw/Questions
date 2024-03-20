@@ -1,0 +1,60 @@
+1 Answer -
+
+1.Presentation Tier:
+
+Create a new Azure App Service and configure it to host your web application.
+Create an Azure Front Door instance and configure it to route traffic to your App Service.
+Application Logic Tier:
+
+2. Create Azure Functions for your application logic.
+Set up Azure Service Bus for messaging if needed.
+Configure Azure API Management if you have APIs to manage.
+
+3. Data Storage Tier:
+
+Create an Azure SQL Database instance and set it up with the necessary tables and configurations.
+Set up Azure Blob Storage for storing files or objects.
+
+
+
+2 Answers-
+
+import requests
+import json
+
+def get_azure_instance_metadata():
+    metadata_url = "http://169.254.169.254/metadata/instance?api-version=2021-02-01"
+    headers = {"Metadata": "true"}
+    response = requests.get(metadata_url, headers=headers)
+    if response.status_code == 200:
+        return json.loads(response.text)
+    else:
+        return None
+
+azure_metadata = get_azure_instance_metadata()
+if azure_metadata:
+    print(json.dumps(azure_metadata, indent=4))
+else:
+    print("Failed to retrieve Azure instance metadata.")
+
+
+3 Answer - 
+
+ def get_value_from_nested_object(obj, key):
+    keys = key.split('/')
+    current_obj = obj
+    for k in keys:
+        if k in current_obj:
+            current_obj = current_obj[k]
+        else:
+            return None
+    return current_obj
+
+# Example usage:
+object1 = {"a": {"b": {"c": "d"}}}
+key1 = "a/b/c"
+print(get_value_from_nested_object(object1, key1))  # Output: d
+
+object2 = {"x": {"y": {"z": "a"}}}
+key2 = "x/y/z"
+print(get_value_from_nested_object(object2, key2))  # Output: a
